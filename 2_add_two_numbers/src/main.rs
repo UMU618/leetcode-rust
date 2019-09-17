@@ -38,6 +38,7 @@ impl ListNode {
     }
 }
 
+// codes to submit begin
 impl ListNode {
     pub fn push_back(&mut self, val: i32) {
         let mut p = self;
@@ -100,6 +101,7 @@ impl Solution {
         Some(result)
     }
 }
+// codes to submit end
 
 fn main() {
     // 2 -> 4 -> 3
