@@ -41,14 +41,18 @@ impl Solution {
         }
 
         // 递归查找
-        let mut mid1 = i32::max_value();
-        let mut mid2 = i32::max_value();
-        if begin1 + k / 2 - 1 < nums1.len() {
-            mid1 = nums1[begin1 + k / 2 - 1];
-        }
-        if begin2 + k / 2 - 1 < nums2.len() {
-            mid2 = nums2[begin2 + k / 2 - 1];
-        }
+        let mid1 = if begin1 + k / 2 - 1 < nums1.len() {
+            nums1[begin1 + k / 2 - 1]
+        } else {
+            // nums1 比较短，已经用完，缩小 nums2
+            i32::max_value()
+        };
+        let mid2 = if begin2 + k / 2 - 1 < nums2.len() {
+            nums2[begin2 + k / 2 - 1]
+        } else {
+            // nums2 比较短，已经用完，缩小 nums1
+            i32::max_value()
+        };
         if mid1 < mid2 {
             return Solution::find_kth(nums1, begin1 + k / 2, nums2, begin2, k - k / 2);
         }
@@ -58,8 +62,8 @@ impl Solution {
 // codes to submit end
 
 // 两个有序数组求中位数，问题一般化为：求两个有序数组的第 k 个数，其中 k 为两个有序数组长度和的一半。
-// find_kth 每次递归分别求出第一个和第二个数组的第 k / 2 个数 a 和 b，使问题规模缩小一半。
-// 比较 a 和 b，当 a < b，说明第 k 个数位于第一个数组的后半段，或者第二个数组的前半段。
+// find_kth 每次递归去掉头尾（头是中位数小的数组的前半部，尾是中位数大的数组的后半部），使问题规模缩小一半。
+// 具体做法：分别求出第一个和第二个数组的第 k / 2 个数 a 和 b，比较 a 和 b，当 a < b，说明第 k 个数位于第一个数组的后半段，或者第二个数组的前半段。
 struct Solution {}
 
 fn test(nums1: Vec<i32>, nums2: Vec<i32>, expect: f64) {
