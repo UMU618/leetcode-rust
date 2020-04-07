@@ -7,10 +7,12 @@ impl Solution {
         for num in &nums {
             bitmask ^= num;
         }
-        let diff = bitmask & (-bitmask);
+        // bitmask = x ^ y
+        // 取值为 1 的位中最低的那位，这个 1 要么来自 x，还么来自 y
+        let lowest_diff = bitmask & (-bitmask);
         let mut x = 0;
         for num in &nums {
-            if num & diff != 0 {
+            if num & lowest_diff != 0 {
                 x ^= num;
             }
         }
